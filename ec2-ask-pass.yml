@@ -1,0 +1,43 @@
+---
+  - name: EC2 Test Deply VM
+    hosts: localhost
+    gather_facts: false
+    vars:
+      var_instance_type: "t2.micro"
+      var_size_disk: "12"
+      var_vm_name: "VM-Test"
+      #var_aws_access_key: "AKIAIEMSFQIJ44NFZT3A"
+      #var_aws_secret_key: "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"
+      #London   
+      var_region: "eu-west-2" #London
+      var_group_id: "sg-d26a53b9" #SG default
+      var_image: "ami-0b0a60c0a2bd40612" # Ubuntu 18.04
+      var_key_name: "key-pair-jpastor" # Personal key-pair already created
+    
+    vars_prompt:
+      - name: "var_aws_access_key"
+        prompt: "Enter AWS Access Key"
+        private: no
+      - name: "var_aws_secret_key"
+        prompt: "Enter AWS Secret Key"
+        private: no
+
+    tasks:
+      - name: Create Instance
+        ec2:
+          aws_access_key: "{{var_aws_access_key}}"
+          aws_secret_key: "{{var_aws_secret_key}}"
+          image: "{{var_image}}"
+          volumes:
+            - device_name: /dev/sda1
+              volume_type: gp2 # SSD General
+              volume_size: "{{var_size_disk}}" # Disk Size
+              delete_on_termination: yes 
+          wait: yes
+          instance_type: "{{var_instance_type}}"
+          group_id: "{{var_group_id}}"
+          region: "{{var_region}}"
+          key_name: "{{var_key_name}}"
+          instance_tags:
+            Name: "{{var_vm_name}}"
+        register: ec2
