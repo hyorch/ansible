@@ -6,8 +6,6 @@
       var_instance_type: "t2.micro"
       var_size_disk: "12"
       var_vm_name: "VM-Test"
-      #var_aws_access_key: "AKIAIEMSFQIJ44NFZT3A"
-      #var_aws_secret_key: "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"
       #London   
       var_region: "eu-west-2" #London
       var_group_id: "sg-d26a53b9" #SG default
