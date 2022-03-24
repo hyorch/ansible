@@ -1,0 +1,24 @@
+---
+- name: Verify apache installation
+  hosts: webserver
+  become: yes
+
+  tasks:
+  - name: Update all packages
+    apt:      
+      upgrade: dist
+      update_cache: yes
+      cache_valid_time: 3600
+  - name: Ensure Apache2 is istalled
+    apt:
+      name: apache2
+      state: latest 
+    
+  - name: Enable mod_rewrite
+    apache2_module: name=rewrite state=present
+    notify:
+      - Restart apache2
+
+  handlers:
+    - name: Restart apache2
+      service: name=apache2 state=restarted
