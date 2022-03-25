@@ -1,0 +1,25 @@
+---
+- name: Verify apache installation
+  hosts: webserver
+  become: yes
+
+  tasks:
+  
+  - name: Ensure Apache2 is not istalled
+    apt:
+      name: apache2
+      state: absent
+  
+  - name: Ensure Apache is not running
+    service:
+      name: apache2
+      state: stopped
+  
+  - name: Clean Packages
+    apt: 
+      autoremove: yes
+      purge: yes
+    
+  - name: Debug
+    debug:
+      msg: END TASKS

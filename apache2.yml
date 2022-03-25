@@ -17,8 +17,17 @@
   - name: Enable mod_rewrite
     apache2_module: name=rewrite state=present
     notify:
-      - Restart apache2
+      - "Restart apache2"
+  
+  - name: Ensure Apache is running
+    service:
+      name: apache2
+      state: started
+  
+  - name: Debug
+    debug:
+      msg: END TASKS
 
   handlers:
-    - name: Restart apache2
+    - name: "Restart apache2"
       service: name=apache2 state=restarted

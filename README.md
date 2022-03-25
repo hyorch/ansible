@@ -33,4 +33,5 @@ ansible webserver -m ansible.builtin.apt -a "name=apache2 state=present" --priva
 ## Run Playbok
 ```sh
 ansible-playbook apache2.yml --private-key  ~/.ssh/jpastor_key -i inventory.ini -b -u jpastor
+ansible-playbook apache2_withrole.yml --private-key  ~/.ssh/jpastor_key -i inventory.ini
 ```

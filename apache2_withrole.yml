@@ -1,0 +1,8 @@
+---
+- name: Verify apache installation
+  hosts: webserver
+  become: yes
+  remote_user: jpastor
+
+  roles:
+    - webserver
